@@ -1,0 +1,7 @@
+name: uRTP
+version: '${project.version}'
+main: me.usainsrht.urtp.URTP
+api-version: '1.20'
+authors:
+  - UsainSrht
+
