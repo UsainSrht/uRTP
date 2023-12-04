@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class RTPCommand extends Command {
 
@@ -36,6 +37,16 @@ public class RTPCommand extends Command {
             } else if (args[0].equalsIgnoreCase("debug")) {
                 URTP.getInstance().setDebug(!URTP.getInstance().isDebug());
                 MessageUtil.send(sender, "debug " + URTP.getInstance().isDebug());
+            } else if (args[0].equalsIgnoreCase("async")) {
+                Player player = (Player) sender;
+                long start = System.currentTimeMillis();
+                CompletableFuture<Location> completableLocation = URTP.getInstance().getRtpManager().generateRTPAsync(player.getWorld());
+                completableLocation.thenAcceptAsync(location -> {
+                    player.sendMessage("x: " + location.getX() + " y: " + location.getY() + " z: " + location.getZ());
+                    player.sendMessage("async elapsed: " + (System.currentTimeMillis()-start) + "ms");
+                    location.add(0.5, 1, 0.5);
+                    player.teleport(location);
+                });
             }
         } else {
             Player player = (Player) sender;
