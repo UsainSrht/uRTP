@@ -4,6 +4,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.usainsrht.urtp.URTP;
 import me.usainsrht.urtp.config.MainConfig;
+import me.usainsrht.urtp.util.MessageUtil;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,25 +26,25 @@ public class RTPCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String command, String[] args) {
         if (!sender.hasPermission(MainConfig.getPermission("use"))) {
-            //MessageUtil.send(sender, LayoutConfig.getMessage("no_permission"));
-            //SoundUtil.play(sender, LayoutConfig.getSound("no_permission"));
+            MessageUtil.send(sender, "no_perm_use");
             return false;
         }
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("reload")) {
                 URTP.getInstance().reload();
-                //MessageUtil.send(sender, LayoutConfig.getMessage("reload"));
-                //SoundUtil.play(sender, LayoutConfig.getSound("reload"));
+                MessageUtil.send(sender, "reload");
+            } else if (args[0].equalsIgnoreCase("debug")) {
+                URTP.getInstance().setDebug(!URTP.getInstance().isDebug());
+                MessageUtil.send(sender, "debug " + URTP.getInstance().isDebug());
             }
         } else {
             Player player = (Player) sender;
             long start = System.currentTimeMillis();
             Location location = URTP.getInstance().getRtpManager().generateRTP(player.getWorld());
             player.sendMessage("x: " + location.getX() + " y: " + location.getY() + " z: " + location.getZ());
-            player.teleport(location);
             player.sendMessage("elapsed: " + (System.currentTimeMillis()-start) + "ms");
-            //MessageUtil.send(sender, LayoutConfig.getMessage("help").replace("<command>", LayoutConfig.getCmdName()));
-            //SoundUtil.play(sender, LayoutConfig.getSound("help"));
+            location.add(0.5, 1, 0.5);
+            player.teleport(location);
             return false;
         }
         return true;

@@ -9,6 +9,8 @@ import me.usainsrht.urtp.command.RTPCommand;
 import me.usainsrht.urtp.config.MainConfig;
 import me.usainsrht.urtp.config.RTPConfig;
 import me.usainsrht.urtp.manager.RTPManager;
+import me.usainsrht.urtp.util.MessageUtil;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class URTP extends JavaPlugin {
@@ -16,9 +18,15 @@ public final class URTP extends JavaPlugin {
     private static URTP instance;
     private RTPManager rtpManager;
     private Commodore commodore;
+    private MiniMessage miniMessage;
+    private boolean debug = false;
+
     @Override
     public void onEnable() {
         instance = this;
+
+        miniMessage = MiniMessage.miniMessage();
+        MessageUtil.initialize(this);
 
         loadConfig();
 
@@ -48,6 +56,18 @@ public final class URTP extends JavaPlugin {
         RTPCommand rtpCommand = new RTPCommand(MainConfig.getCmdName(), MainConfig.getCmdDesc(), MainConfig.getCmdUsage(), MainConfig.getCmdAliases());
         CommandHandler.register("urtp", rtpCommand);
         commodore.register(rtpCommand, rtpCommand.getCommodoreCommand());
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public MiniMessage getMiniMessage() {
+        return miniMessage;
     }
 
     public Commodore getCommodore() {

@@ -4,9 +4,11 @@ prefix: "<green>µRTP <dark_gray>»"
 messages:
   help:
     - "<red>help msg"
+  reload: "<green>Config reloaded successfully!"
 
 sounds:
   help: "entity.villager.ambient"
+  reload: "entity.villager.yes"
 
 command:
   name: "rtp"
