@@ -1,7 +1,9 @@
 package me.usainsrht.urtp.config;
 
+import me.usainsrht.urtp.command.RTPCommand;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import org.bukkit.command.Command;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.*;
@@ -12,6 +14,12 @@ public class MainConfig {
 
     private static HashMap<String, Collection<String>> messages;
     private static HashMap<String, Collection<Sound>> sounds;
+
+    private static String cmdName;
+    private static String cmdDesc;
+    private static String cmdUsage;
+    private static HashMap<String, String> cmdPerms;
+    private static List<String> cmdAliases;
 
     public static void create(ConfigurationSection config) {
         prefix = config.getString("prefix");
@@ -48,6 +56,15 @@ public class MainConfig {
             }
         });
 
+        cmdName = config.getString("command.name");
+        cmdDesc = config.getString("command.description");
+        cmdUsage = config.getString("command.usage");
+        cmdAliases = config.getStringList("command.aliases");
+        cmdPerms = new HashMap<>();
+        config.getConfigurationSection("command.permissions").getKeys(false).forEach(key -> {
+            cmdPerms.put(key, config.getString("command.permissions." + key));
+        });
+
     }
 
     public static String getPrefix() {
@@ -60,5 +77,25 @@ public class MainConfig {
 
     public static Collection<Sound> getSound(String sound) {
         return sounds.getOrDefault(sound, Collections.emptyList());
+    }
+
+    public static String getCmdName() {
+        return cmdName;
+    }
+
+    public static String getCmdDesc() {
+        return cmdDesc;
+    }
+
+    public static String getCmdUsage() {
+        return cmdUsage;
+    }
+
+    public static List<String> getCmdAliases() {
+        return cmdAliases;
+    }
+
+    public static String getPermission(String permission) {
+        return cmdPerms.get(permission);
     }
 }

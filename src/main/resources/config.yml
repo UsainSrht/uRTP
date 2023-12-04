@@ -8,6 +8,20 @@ messages:
 sounds:
   help: "entity.villager.ambient"
 
+command:
+  name: "rtp"
+  description: "Random teleportation command"
+  usage: "/rtp"
+  aliases:
+    - "urtp"
+    - "randomtp"
+    - "urandomtp"
+  permissions:
+    use: urtp.use
+    use_others: urtp.use.others
+    reset: urtp.reset
+    reset_others: urtp.reset.others
+
 worlds:
   world:
     # methods: ITERATE_FROM_BOTTOM, ITERATE_FROM_TOP, GET_HIGHEST_BLOCK
@@ -33,6 +47,7 @@ worlds:
         - PLAINS
   world_nether:
     method: ITERATE_FROM_BOTTOM
+    max_attempts: 100
     range:
       x:
         min: -50000
@@ -49,6 +64,7 @@ worlds:
         - BASALT_DELTAS
   world_the_end:
     method: ITERATE_FROM_BOTTOM
+    max_attempts: 100
     range:
       x:
         min: -50000
