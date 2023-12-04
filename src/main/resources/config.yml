@@ -1,3 +1,66 @@
-# leave empty ("") to remove prefix
+# leave empty (prefix: "") to remove prefix
 prefix: "<green>µRTP <dark_gray>»"
 
+messages:
+  help:
+    - "<red>help msg"
+
+sounds:
+  help: "entity.villager.ambient"
+
+worlds:
+  world:
+    # methods: ITERATE_FROM_BOTTOM, ITERATE_FROM_TOP, GET_HIGHEST_BLOCK
+    method: GET_HIGHEST_BLOCK
+    # how many failed attempts to stop searching
+    max_attempts: 100
+    range:
+      x:
+        min: -50000
+        max: 50000
+      y:
+        min: 63
+        max: 150
+      z:
+        min: -50000
+        max: 50000
+    biome_filter:
+      # modes: WHITELIST, BLACKLIST
+      mode: WHITELIST
+      # biome list: https://jd.papermc.io/paper/1.20/org/bukkit/block/Biome.html
+      # leave empty (list: []) to disable biome filtering
+      list:
+        - PLAINS
+  world_nether:
+    method: ITERATE_FROM_BOTTOM
+    range:
+      x:
+        min: -50000
+        max: 50000
+      y:
+        min: 34
+        max: 96
+      z:
+        min: -50000
+        max: 50000
+    biome_filter:
+      mode: BLACKLIST
+      list:
+        - BASALT_DELTAS
+  world_the_end:
+    method: ITERATE_FROM_BOTTOM
+    range:
+      x:
+        min: -50000
+        max: 50000
+      y:
+        min: 53
+        max: 67
+      z:
+        min: -50000
+        max: 50000
+    biome_filter:
+      mode: BLACKLIST
+      list:
+        - END_BARRENS
+        - SMALL_END_ISLANDS

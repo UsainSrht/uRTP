@@ -1,0 +1,5 @@
+rtp {
+  reset {
+    player brigadier:string single_word;
+  }
+}
