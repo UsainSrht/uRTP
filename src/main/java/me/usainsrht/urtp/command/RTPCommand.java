@@ -1,6 +1,8 @@
 package me.usainsrht.urtp.command;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.usainsrht.urtp.URTP;
 import me.usainsrht.urtp.config.MainConfig;
@@ -21,6 +23,8 @@ public class RTPCommand extends Command {
 
     public LiteralCommandNode<?> getCommodoreCommand() {
         return LiteralArgumentBuilder.literal(super.getName())
+                .then(LiteralArgumentBuilder.literal("reset")
+                        .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word())))
                 .build();
     }
 

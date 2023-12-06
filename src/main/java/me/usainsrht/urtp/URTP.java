@@ -13,6 +13,8 @@ import me.usainsrht.urtp.util.MessageUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 public final class URTP extends JavaPlugin {
 
     private static URTP instance;

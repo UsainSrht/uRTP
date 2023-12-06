@@ -65,7 +65,7 @@ worlds:
       list:
         - BASALT_DELTAS
   world_the_end:
-    method: ITERATE_FROM_BOTTOM
+    method: GET_HIGHEST_BLOCK
     max_attempts: 100
     range:
       x:

@@ -27,4 +27,12 @@ public class Range {
     public int getMax() {
         return max;
     }
+
+    @Override
+    public String toString() {
+        return "Range{" +
+                "min=" + min +
+                ", max=" + max +
+                '}';
+    }
 }
