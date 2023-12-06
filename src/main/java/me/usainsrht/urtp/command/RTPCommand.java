@@ -25,6 +25,7 @@ public class RTPCommand extends Command {
         return LiteralArgumentBuilder.literal(super.getName())
                 .then(LiteralArgumentBuilder.literal("reset")
                         .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word())))
+                .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word()))
                 .build();
     }
 
@@ -49,7 +50,7 @@ public class RTPCommand extends Command {
                     player.sendMessage("x: " + location.getX() + " y: " + location.getY() + " z: " + location.getZ());
                     player.sendMessage("async elapsed: " + (System.currentTimeMillis()-start) + "ms");
                     location.add(0.5, 1, 0.5);
-                    player.teleport(location);
+                    player.teleportAsync(location);
                 });
             }
         } else {

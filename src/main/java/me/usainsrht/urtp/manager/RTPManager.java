@@ -3,8 +3,6 @@ package me.usainsrht.urtp.manager;
 import me.usainsrht.urtp.URTP;
 import me.usainsrht.urtp.config.RTPConfig;
 import me.usainsrht.urtp.rtp.RTPLayout;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -37,7 +35,7 @@ public class RTPManager {
                     int x = rtpLayout.getxRange().next();
                     int z = rtpLayout.getzRange().next();
                     Block block = world.getHighestBlockAt(x, z);
-                    if (isSafe(block)) {
+                    if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                         location = block.getLocation();
                         break;
                     }
@@ -57,7 +55,7 @@ public class RTPManager {
                 while (location == null) {
                     y--;
                     Block block = world.getBlockAt(x, y, z);
-                    if (isSafe(block)) {
+                    if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                         location = block.getLocation();
                         break;
                     }
@@ -82,7 +80,7 @@ public class RTPManager {
                 while (location == null) {
                     y++;
                     Block block = world.getBlockAt(x, y, z);
-                    if (isSafe(block)) {
+                    if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                         location = block.getLocation();
                         break;
                     }
@@ -143,7 +141,7 @@ public class RTPManager {
             if (plugin.isDebug()) plugin.getLogger().info("loaded chunk at x: " + x + " z: " + z + " in " + (System.currentTimeMillis()-start) + "ms");
 
             Block block = world.getHighestBlockAt(x, z);
-            if (isSafe(block)) {
+            if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                 future.complete(block.getLocation());
                 if (plugin.isDebug()) plugin.getLogger().info("block is safe, completed the future. attempt: " + attempts);
                 return;
@@ -165,12 +163,12 @@ public class RTPManager {
             if (plugin.isDebug()) plugin.getLogger().info("loaded chunk at x: " + x + " z: " + z + " in " + (System.currentTimeMillis()-start) + "ms");
 
             Block block = world.getBlockAt(x, y, z);
-            if (isSafe(block)) {
+            if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                 future.complete(block.getLocation());
                 if (plugin.isDebug()) plugin.getLogger().info("block is safe, completed the future. attempt: " + attempts);
                 return;
             }
-            if (y <= rtpLayout.getzRange().getMin()) {
+            if (y <= rtpLayout.getyRange().getMin()) {
                 if (plugin.isDebug()) plugin.getLogger().info("all y levels from " + rtpLayout.getyRange() + " is not safe at x: " + x + " z: " + z);
 
                 int attempt = attempts + 1;
@@ -197,12 +195,12 @@ public class RTPManager {
             if (plugin.isDebug()) plugin.getLogger().info("loaded chunk at x: " + x + " z: " + z + " in " + (System.currentTimeMillis()-start) + "ms");
 
             Block block = world.getBlockAt(x, y, z);
-            if (isSafe(block)) {
+            if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                 future.complete(block.getLocation());
                 if (plugin.isDebug()) plugin.getLogger().info("block is safe, completed the future. attempt: " + attempts);
                 return;
             }
-            if (y >= rtpLayout.getzRange().getMax()) {
+            if (y >= rtpLayout.getyRange().getMax()) {
                 if (plugin.isDebug()) plugin.getLogger().info("all y levels from " + rtpLayout.getyRange() + " is not safe at x: " + x + " z: " + z);
 
                 int attempt = attempts + 1;
@@ -219,15 +217,6 @@ public class RTPManager {
 
             completeRTPFutureByIterateFromBottom(future, world, rtpLayout, attempts, x, y+1, z);
         });
-    }
-
-    public boolean isSafe(Block block) {
-        if (!block.isSolid()) return false;
-        Block above = block.getRelative(0, 1, 0);
-        if (above.isSolid() || above.isLiquid()) return false;
-        Block above2 = block.getRelative(0, 2, 0);
-        if (above2.isSolid() || above2.isLiquid()) return false;
-        return true;
     }
 
 }

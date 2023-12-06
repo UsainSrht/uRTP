@@ -47,6 +47,16 @@ worlds:
       # leave empty (list: []) to disable biome filtering
       list:
         - PLAINS
+    block_filter:
+      #delta x,y,z
+      0,0,0: # the main block
+        SOLID: true
+      0,1,0: # one block above the main block
+        SOLID: false
+        LIQUID: false
+      0,2,0: # two blocks above the main block
+        SOLID: false
+        LIQUID: false
   world_nether:
     method: ITERATE_FROM_BOTTOM
     max_attempts: 100
@@ -64,6 +74,15 @@ worlds:
       mode: BLACKLIST
       list:
         - BASALT_DELTAS
+    block_filter:
+      0,0,0:
+        SOLID: true
+      0,1,0:
+        SOLID: false
+        LIQUID: false
+      0,2,0:
+        SOLID: false
+        LIQUID: false
   world_the_end:
     method: GET_HIGHEST_BLOCK
     max_attempts: 100
@@ -82,3 +101,12 @@ worlds:
       list:
         - END_BARRENS
         - SMALL_END_ISLANDS
+    block_filter:
+      0,0,0:
+        SOLID: true
+      0,1,0:
+        SOLID: false
+        LIQUID: false
+      0,2,0:
+        SOLID: false
+        LIQUID: false
