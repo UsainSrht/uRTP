@@ -47,6 +47,24 @@ worlds:
       # leave empty (list: []) to disable biome filtering
       list:
         - PLAINS
+        - MEADOW
+        - CHERRY_GROVE
+        - WINDSWEPT_FOREST
+        - FOREST
+        - FLOWER_FOREST
+        - TAIGA
+        - OLD_GROWTH_PINE_TAIGA
+        - OLD_GROWTH_SPRUCE_TAIGA
+        - SNOWY_TAIGA
+        - BIRCH_FOREST
+        - OLD_GROWTH_BIRCH_FOREST
+        - DARK_FOREST
+        - JUNGLE
+        - BAMBOO_JUNGLE
+        - SPARSE_JUNGLE
+        - SUNFLOWER_PLAINS
+        - SAVANNA
+        - SAVANNA_PLATEAU
     block_filter:
       #delta x,y,z
       0,0,0: # the main block
