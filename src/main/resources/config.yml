@@ -31,6 +31,8 @@ worlds:
     # how many failed attempts to stop searching
     max_attempts: 100
     range:
+      # don't generate location outside of worldborder.
+      limit_to_worldborder: true
       x:
         min: -50000
         max: 50000
@@ -79,6 +81,8 @@ worlds:
     method: ITERATE_FROM_BOTTOM
     max_attempts: 100
     range:
+      # don't generate location outside of worldborder.
+      limit_to_worldborder: true
       x:
         min: -50000
         max: 50000
@@ -105,6 +109,8 @@ worlds:
     method: GET_HIGHEST_BLOCK
     max_attempts: 100
     range:
+      # don't generate location outside of worldborder.
+      limit_to_worldborder: true
       x:
         min: -50000
         max: 50000

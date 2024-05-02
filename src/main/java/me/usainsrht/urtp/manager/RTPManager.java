@@ -32,8 +32,8 @@ public class RTPManager {
             case GET_HIGHEST_BLOCK -> {
                 while (location == null) {
                     attempts++;
-                    int x = rtpLayout.getxRange().next();
-                    int z = rtpLayout.getzRange().next();
+                    int x = rtpLayout.getRandomX(world);
+                    int z = rtpLayout.getRandomZ(world);
                     Block block = world.getHighestBlockAt(x, z);
                     if (rtpLayout.isBlockValid(block) && rtpLayout.isBiomeValid(block.getBiome())) {
                         location = block.getLocation();
@@ -49,9 +49,9 @@ public class RTPManager {
                 }
             }
             case ITERATE_FROM_TOP -> {
-                int x = rtpLayout.getxRange().next();
+                int x = rtpLayout.getRandomX(world);
                 int y = rtpLayout.getyRange().getMax()+1;
-                int z = rtpLayout.getzRange().next();
+                int z = rtpLayout.getRandomZ(world);
                 while (location == null) {
                     y--;
                     Block block = world.getBlockAt(x, y, z);
@@ -67,16 +67,16 @@ public class RTPManager {
                             }
                             break;
                         }
-                        x = rtpLayout.getxRange().next();
+                        x = rtpLayout.getRandomX(world);
                         y = rtpLayout.getyRange().getMax()+1;
-                        z = rtpLayout.getzRange().next();
+                        z = rtpLayout.getRandomZ(world);
                     }
                 }
             }
             case ITERATE_FROM_BOTTOM -> {
-                int x = rtpLayout.getxRange().next();
+                int x = rtpLayout.getRandomX(world);
                 int y = rtpLayout.getyRange().getMin()-1;
-                int z = rtpLayout.getzRange().next();
+                int z = rtpLayout.getRandomZ(world);
                 while (location == null) {
                     y++;
                     Block block = world.getBlockAt(x, y, z);
@@ -92,9 +92,9 @@ public class RTPManager {
                             }
                             break;
                         }
-                        x = rtpLayout.getxRange().next();
+                        x = rtpLayout.getRandomX(world);
                         y = rtpLayout.getyRange().getMin()-1;
-                        z = rtpLayout.getzRange().next();
+                        z = rtpLayout.getRandomZ(world);
                     }
 
                 }

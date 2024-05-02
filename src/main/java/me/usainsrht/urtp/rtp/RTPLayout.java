@@ -1,5 +1,7 @@
 package me.usainsrht.urtp.rtp;
 
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -13,6 +15,7 @@ public class RTPLayout {
 
     private RTPMethod method;
     private int maxAttempts;
+    private boolean limitToWorldborder;
     private Range xRange;
     private Range yRange;
     private Range zRange;
@@ -23,6 +26,7 @@ public class RTPLayout {
     public RTPLayout(ConfigurationSection config) {
         this.method = RTPMethod.valueOf(config.getString("method"));
         this.maxAttempts = config.getInt("max_attempts");
+        this.limitToWorldborder = config.getBoolean("range.limit_to_worldborder", true);
         this.xRange = new Range(config.getInt("range.x.min"), config.getInt("range.x.max"));
         this.yRange = new Range(config.getInt("range.y.min"), config.getInt("range.y.max"));
         this.zRange = new Range(config.getInt("range.z.min"), config.getInt("range.z.max"));
@@ -58,8 +62,38 @@ public class RTPLayout {
         return (bfMode == BiomeFilterMode.WHITELIST) == bfList.contains(biome);
     }
 
+    public int getRandomX(World world) {
+        if (isLimitToWorldborder()) {
+            WorldBorder worldBorder = world.getWorldBorder();
+            int borderMin = worldBorder.getCenter().getBlockX() - (int)worldBorder.getSize();
+            int borderMax = worldBorder.getCenter().getBlockX() + (int)worldBorder.getSize();
+            int min = Math.max(borderMin, getxRange().getMin());
+            int max = Math.min(borderMax, getxRange().getMax());
+            return new Range(min, max).next();
+        }
+        return getxRange().next();
+    }
+
+    public int getRandomZ(World world) {
+        if (isLimitToWorldborder()) {
+            WorldBorder worldBorder = world.getWorldBorder();
+            int borderMin = worldBorder.getCenter().getBlockZ() - (int)worldBorder.getSize();
+            int borderMax = worldBorder.getCenter().getBlockZ() + (int)worldBorder.getSize();
+            int min = Math.max(borderMin, getzRange().getMin());
+            int max = Math.min(borderMax, getzRange().getMax());
+            return new Range(min, max).next();
+        }
+        return getzRange().next();
+    }
+
+    //getters
+
     public int getMaxAttempts() {
         return maxAttempts;
+    }
+
+    public boolean isLimitToWorldborder() {
+        return limitToWorldborder;
     }
 
     public Range getxRange() {

@@ -1,9 +1,7 @@
 package me.usainsrht.urtp.config;
 
-import me.usainsrht.urtp.command.RTPCommand;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
-import org.bukkit.command.Command;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.*;
